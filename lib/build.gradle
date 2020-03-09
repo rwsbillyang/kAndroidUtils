@@ -1,0 +1,73 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+group = "com.github.rwsbillyang"
+version = "1.0.0"
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName version
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation "androidx.core:core-ktx:$rootProject.ext.ktxCoreVersion"
+
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlin_version"
+
+    //https://github.com/googlesamples/android-preferences/blob/master/app/build.gradle
+    implementation 'androidx.preference:preference:1.1.0'
+
+
+    //toasty https://github.com/GrenderG/Toasty
+    //implementation "com.github.GrenderG:Toasty:1.4.2"
+
+    //Glide
+//    kapt "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
+//    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+//    //https://github.com/wasabeef/glide-transformations
+//    implementation "jp.wasabeef:glide-transformations:$glideTransformVersion"
+//    // If you want to use the GPU Filters https://github.com/cats-oss/android-gpuimage
+//    implementation "jp.co.cyberagent.android:gpuimage:$rootProject.ext.gpuimageVersion"
+}
+
+
+
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact "./build/outputs/aar/lib-release.aar"
+            groupId group
+            artifactId "kandroidutils"
+            version version
+        }
+    }
+}
